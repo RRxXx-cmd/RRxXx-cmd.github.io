@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salsas Sabor Lupita</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #000;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: radial-gradient(circle at 30% 30%, #4e342e 0px, transparent 40px),
+                  radial-gradient(circle at 70% 70%, #4e342e 0px, transparent 40px);
+      background-size: 400% 400%;
+      animation: manchas 20s linear infinite;
+    }
+
+    @keyframes manchas {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 100% 100%; }
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px; 
+      background-color: rgba(0, 0, 0, 0.7);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+      text-align: center;
+      position: relative;
+    }
+
+    header img {
+      width: 100%;
+      max-width: 1000px;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .titulo-impactante {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      padding: 15px 30px;
+      border-radius: 20px;
+      font-size: 4em;
+      color: #f9d423;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
+      margin: 0;
+      animation: resaltar 2s infinite alternate;
+    }
+
+    @keyframes resaltar {
+      0% {
+        transform: translateX(-50%) scale(1);
+        color: #f9d423;
+      }
+      50% {
+        transform: translateX(-50%) scale(1.1);
+        color: #ff5722;
+      }
+      100% {
+        transform: translateX(-50%) scale(1);
+        color: #f9d423;
+      }
+    }
+
+    nav {
+      background-color: #1d1c1c;
+      padding: 10px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 15px 20px;
+      font-size: 1.2em;
+    }
+
+    nav a:hover {
+      background-color: #3a2f28;
+      border-radius: 5px;
+    }
+
+    .content {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .content h2 {
+      font-size: 2.5em;
+      color: #eba88d;
+      margin-bottom: 20px;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 20px;
+    }
+
+    .product-card {
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+      width: 250px;
+      text-align: center;
+      transition: transform 0.3s;
+      cursor: pointer;
+    }
+
+    .product-card:hover {
+      transform: scale(1.05);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .product-card h3 {
+      margin: 10px 0 5px;
+      color: #f9d423;
+    }
+
+    .product-card p {
+      margin: 0;
+      color: #ffffff;
+      font-size: 1.1em;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .modal-content {
+      background-color: #222;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 600px;
+      position: relative;
+      text-align: center;
+    }
+
+    .modal-content h3, .modal-content p {
+      margin: 10px 0;
+      color: #f9d423;
+    }
+
+    .close {
+      color: white;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 30px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: #f9d423;
+    }
+
+    footer.footer-contacto {
+      background-color: #111;
+      color: #fff;
+      padding: 30px 20px;
+      font-family: 'Arial', sans-serif;
+      margin-top: 60px;
+    }
+
+    .footer-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      text-align: center;
+    }
+
+    .footer-contacto-info h3,
+    .footer-desarrollador h3 {
+      margin-bottom: 10px;
+      color: #f9d423;
+    }
+
+    .footer-desarrollador a {
+      color: #00b8ff;
+      text-decoration: none;
+    }
+
+    .footer-desarrollador a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      margin-top: 20px;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+
+    @media (min-width: 768px) {
+      .footer-container {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="background"></div>
+
+<header>
+  <img src="logo.jpeg" alt="Logo de Salsas Lupita">
+  <h1 class="titulo-impactante">Salsas Sabor Lupita</h1>
+</header>
+
+<nav>
+  <a href="#galeria">Galería</a>
+  <a href="#contacto">Contacto</a>
+</nav>
+
+<section class="content" id="galeria">
+  <h2>Galería de Productos</h2>
+  <div class="gallery">
+    <!-- Productos -->
+    <div class="product-card" onclick="showModal('Salsa de Guacamole', '$13', 'Tel: 55 4013 5327')">
+      <img src="salsa_de_guacamole.jpeg" alt="Salsa de Guacamole">
+      <h3>Salsa de Guacamole</h3>
+      <p>$13</p>
+    </div>
+    <div class="product-card" onclick="showModal('Salsa de Cacahuate', '$13', 'Tel: 55 4013 5327')">
+      <img src="salsa_de_cacahuate.jpeg" alt="Salsa de Cacahuate">
+      <h3>Salsa de Cacahuate</h3>
+      <p>$13</p>
+    </div>
+    <div class="product-card" onclick="showModal('Guakanero', '$13', 'Tel: 55 4013 5327')">
+      <img src="Guakanero.jpeg" alt="Guakanero">
+      <h3>Guakanero</h3>
+      <p>$13</p>
+    </div>
+    <div class="product-card" onclick="showModal('Salsa Ranchera', '$13', 'Tel: 55 4013 5327')">
+      <img src="Ranchera.jpeg" alt="Salsa Ranchera">
+      <h3>Salsa Ranchera</h3>
+      <p>$13</p>
+    </div>
+    <div class="product-card" onclick="showModal('Salsa de Habanero', '$13', 'Tel: 55 4013 5327')">
+      <img src="salsa_habanero.jpeg" alt="Salsa de Habanero">
+      <h3>Salsa de Habanero</h3>
+      <p>$13</p>
+    </div>
+    <div class="product-card" onclick="showModal('Salsa Roja de Asada', '$13', 'Tel: 55 4013 5327')">
+      <img src="salsa_roja_asada.jpeg" alt="Salsa Roja Asada">
+      <h3>Salsa Roja de Asada</h3>
+      <p>$13</p>
+    </div>
+    <div class="product-card" onclick="showModal('Salsa Verde Asada', '$13', 'Tel: 55 4013 5327')">
+      <img src="salsa_verde_asada.jpeg" alt="Salsa Verde Asada">
+      <h3>Salsa Verde Asada</h3>
+      <p>$13</p>
+    </div>
+    <div class="product-card" onclick="showModal('Salsa Taquera', '$13', 'Tel: 55 4013 5327')">
+      <img src="salsa_taquera.jpeg" alt="Salsa Taquera">
+      <h3>Salsa Taquera</h3>
+      <p>$13</p>
+    </div>
+    <div class="product-card" onclick="showModal('Guajillo', '$13', 'Tel: 55 4013 5327')">
+      <img src="guajillo.jpeg" alt="Guajillo">
+      <h3>Guajillo</h3>
+      <p>$13</p>
+    </div>
+    <div class="product-card" onclick="showModal('Salsa Especial', '$13', 'Tel: 55 4013 5327')">
+      <img src="salsa_especial.jpeg" alt="Salsa Especial">
+      <h3>Salsa Especial</h3>
+      <p>$13</p>
+    </div>
+    <div class="product-card" onclick="showModal('Salsa Macha', '$16', 'Tel: 55 4013 5327')">
+      <img src="salsa_macha.jpeg" alt="Salsa Macha">
+      <h3>Salsa Macha</h3>
+      <p>$16</p>
+    </div>
+    <div class="product-card" onclick="showModal('Salsa de Semillas de Girasol', '$16', 'Tel: 55 4013 5327')">
+      <img src="salsa_semilla_de_girasol.jpeg" alt="Salsa de Semillas de Girasol">
+      <h3>Salsa de Semillas de Girasol</h3>
+      <p>$16</p>
+    </div>
+    <div class="product-card" onclick="showModal('Especial', '$16', 'Tel: 55 4013 5327')">
+      <img src="especial.jpeg" alt="Especial">
+      <h3>Especial</h3>
+      <p>$16</p>
+    </div>
+    <div class="product-card" onclick="showModal('Arandano', '$16', 'Tel: 55 4013 5327')">
+      <img src="arandano.jpeg" alt="Arandano">
+      <h3>Arandano</h3>
+      <p>$16</p>
+    </div>
+  </div>
+</section>
+
+<!-- Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h3 id="modalTitle"></h3>
+    <p id="modalPrice"></p>
+    <p id="modalContact"></p>
+  </div>
+</div>
+
+<script>
+  function showModal(title, price, contact) {
+    document.getElementById("modalTitle").textContent = title;
+    document.getElementById("modalPrice").textContent = price;
+    document.getElementById("modalContact").textContent = contact;
+    document.getElementById("myModal").style.display = "block";
+  }
+
+  function closeModal() {
+    document.getElementById("myModal").style.display = "none";
+  }
+</script>
+
+<!-- Pie de página -->
+<footer class="footer-contacto">
+  <div class="footer-container">
+    <div class="footer-contacto-info">
+      <h3>Contacto</h3>
+      <p>Para pedidos, llámanos al: <a href="tel:+55540135327">55 4013 5327</a></p>
+      <p>Correo electrónico: <a href="mailto:salsaslupita@example.com">lupita_.salsa@hotmail.com</a></p>
+    </div>
+    <div class="footer-desarrollador">
+      <h3>Desarrollado por</h3>
+      <p><a href="https://www.linkedin.com/in/desarrollador">Edgar Josue Riqueño Riqueño</a></p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Salsas Sabor Lupita. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+</body>
+</html>         
